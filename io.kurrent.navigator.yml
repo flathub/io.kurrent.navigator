@@ -33,15 +33,24 @@ modules:
       # zypak launch wrapper on PATH
       - install -Dm755 kurrent-navigator.sh /app/bin/kurrent-navigator
       # Desktop file.
-      - install -Dm644 usr/share/applications/kurrent-navigator.desktop /app/share/applications/io.kurrent.navigator.desktop
-      - desktop-file-edit --set-key=Exec --set-value="kurrent-navigator %U" --set-icon=io.kurrent.navigator
+      - install -Dm644 usr/share/applications/kurrent-navigator.desktop
+        /app/share/applications/io.kurrent.navigator.desktop
+      - desktop-file-edit
+        --set-key=Exec --set-value="kurrent-navigator %U"
+        --set-icon=io.kurrent.navigator
         /app/share/applications/io.kurrent.navigator.desktop
       # flatpak rejects icons larger than 512x512.
       - rm usr/share/icons/hicolor/1024x1024/apps/kurrent-navigator.png
       # Move icons into place.
       - cp -a usr/share/icons /app/share/
-      # Metainfo will be inside the .deb from 0.1.2, but here for now.
-      - install -Dm644 io.kurrent.navigator.metainfo.xml /app/share/metainfo/io.kurrent.navigator.metainfo.xml
+      # Metainfo; its launchable has to follow the desktop-file rename above.
+      - install -Dm644 "opt/Kurrent Navigator/resources/io.kurrent.navigator.metainfo.xml"
+        /app/share/metainfo/io.kurrent.navigator.metainfo.xml
+      - sed -i 's|>kurrent-navigator.desktop<|>io.kurrent.navigator.desktop<|'
+        /app/share/metainfo/io.kurrent.navigator.metainfo.xml
+      # license
+      - install -Dm644 "opt/Kurrent Navigator/resources/LICENSE.txt"
+        /app/share/licenses/io.kurrent.navigator/LICENSE.txt
     sources:
       - type: file
         only-arches: [x86_64]
@@ -61,9 +70,3 @@ modules:
         dest-filename: kurrent-navigator.sh
         commands:
           - exec zypak-wrapper /app/kurrent-navigator/kurrent-navigator "$@"
-      - type: file
-        path: io.kurrent.navigator.metainfo.xml
-      - type: file
-        dest-filename: LICENSE.txt
-        url: https://assets.navigator.kurrent.io/LICENSE.txt
-        sha256: 2fd3635f8bfdac7ebdd6170f16407e526595d36cca0f96ddf43637fdf3ba1827
