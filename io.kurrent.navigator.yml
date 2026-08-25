@@ -33,11 +33,8 @@ modules:
       # zypak launch wrapper on PATH
       - install -Dm755 kurrent-navigator.sh /app/bin/kurrent-navigator
       # Desktop file.
-      - install -Dm644 usr/share/applications/kurrent-navigator.desktop
-        /app/share/applications/io.kurrent.navigator.desktop
-      - desktop-file-edit
-        --set-key=Exec --set-value="kurrent-navigator %U"
-        --set-icon=io.kurrent.navigator
+      - install -Dm644 usr/share/applications/kurrent-navigator.desktop /app/share/applications/io.kurrent.navigator.desktop
+      - desktop-file-edit --set-key=Exec --set-value="kurrent-navigator %U" --set-icon=io.kurrent.navigator
         /app/share/applications/io.kurrent.navigator.desktop
       # flatpak rejects icons larger than 512x512.
       - rm usr/share/icons/hicolor/1024x1024/apps/kurrent-navigator.png
@@ -46,23 +43,21 @@ modules:
       # Metainfo; its launchable has to follow the desktop-file rename above.
       - install -Dm644 "opt/Kurrent Navigator/resources/io.kurrent.navigator.metainfo.xml"
         /app/share/metainfo/io.kurrent.navigator.metainfo.xml
-      - sed -i 's|>kurrent-navigator.desktop<|>io.kurrent.navigator.desktop<|'
-        /app/share/metainfo/io.kurrent.navigator.metainfo.xml
+      - sed -i 's|>kurrent-navigator.desktop<|>io.kurrent.navigator.desktop<|' /app/share/metainfo/io.kurrent.navigator.metainfo.xml
       # license
-      - install -Dm644 "opt/Kurrent Navigator/resources/LICENSE.txt"
-        /app/share/licenses/io.kurrent.navigator/LICENSE.txt
+      - install -Dm644 "opt/Kurrent Navigator/resources/LICENSE.txt" /app/share/licenses/io.kurrent.navigator/LICENSE.txt
     sources:
       - type: file
         only-arches: [x86_64]
-        url: https://packages.kurrent.io/public/navigator/deb/any-distro/pool/any-version/main/k/ku/kurrent-navigator_0.2.0/kurrent-navigator.amd64.deb
-        sha256: dfa86feb2c4d1d869b83f0a0ca1140adcda7c08adc31e4059ee79537cac398d8
+        url: https://packages.kurrent.io/public/navigator/deb/any-distro/pool/any-version/main/k/ku/kurrent-navigator_0.3.0/kurrent-navigator.amd64.deb
+        sha256: 8c89a1e924b9f0978c5e3667a5e188ecbef60bb2425d8c3d1844e835e6b435a6
         x-checker-data:
           type: rotating-url
           url: https://downloads.navigator.kurrent.io/latest/kurrent-navigator.amd64.deb
       - type: file
         only-arches: [aarch64]
-        url: https://packages.kurrent.io/public/navigator/deb/any-distro/pool/any-version/main/k/ku/kurrent-navigator_0.2.0/kurrent-navigator.arm64.deb
-        sha256: 094552315699ee474ade544eb0b33caea86138940959c40236c4a955c86baa5b
+        url: https://packages.kurrent.io/public/navigator/deb/any-distro/pool/any-version/main/k/ku/kurrent-navigator_0.3.0/kurrent-navigator.arm64.deb
+        sha256: ec9a35002e2569bcd358d2b82de5223950c3cb5e82fda4e056eb4bb8712757e9
         x-checker-data:
           type: rotating-url
           url: https://downloads.navigator.kurrent.io/latest/kurrent-navigator.arm64.deb
